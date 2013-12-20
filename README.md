@@ -10,3 +10,10 @@ Eclipse上で実行する場合, assetsフォルダはeclipse/minecraft/bin/asse
 チュートリアル内容
 ==================
 
+com.sample.gui.container
+
+* Block+Container+GUIのサンプル
+
+com.sample.gui.tileentity
+
+* BLock+Container+TileEntity+GUIのサンプル
