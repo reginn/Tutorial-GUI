@@ -10,8 +10,8 @@ import net.minecraft.util.StatCollector;
 /*
  * 今回はContainerを使うのでGuiContainerを継承する.
  */
-public class GuiContainerBasic extends GuiContainer {
-
+public class GuiContainerBasic extends GuiContainer
+{
 	/*
 	 * GUIの背景の画像.
 	 * ResourceLocationの引数はsetTextureNameやregisterIconとほぼ同等.
@@ -25,7 +25,8 @@ public class GuiContainerBasic extends GuiContainer {
 	 * コンストラクタ
 	 * スーパークラスのコンストラクタの引数はContainerな点に注意.
 	 */
-	public GuiContainerBasic(InventoryPlayer inventoryPlayer) {
+	public GuiContainerBasic(InventoryPlayer inventoryPlayer)
+	{
 		super(new ContainerBasic(inventoryPlayer));
 
 		/*
@@ -49,7 +50,7 @@ public class GuiContainerBasic extends GuiContainer {
 		 *
 		 * drawStringの引数は(表示文字列, GUIの左上からx, GUIの左上からy, 文字列の色(RBG)).
 		 */
-		this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, 0x404040);
+		this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, 0x404040);
 	}
 
 	/*
@@ -57,8 +58,8 @@ public class GuiContainerBasic extends GuiContainer {
 	 * 第一引数は描画のtick, 第二, 三引数はマウスカーソルの座標(x, y)
 	 */
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float renderPartialTicks, int xMouse, int yMouse) {
-
+	protected void drawGuiContainerBackgroundLayer(float renderPartialTicks, int xMouse, int yMouse)
+	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		/*
@@ -77,6 +78,5 @@ public class GuiContainerBasic extends GuiContainer {
 		 * (x, y)を左上始点として, リソース内の(0, 0) ~ (xSize, ySize)までを描画する.
 		 */
 		this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
-
 	}
 }

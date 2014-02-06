@@ -1,30 +1,18 @@
 package com.sample.gui.container;
 
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-
-@Mod(
-	modid = "GuiContainer",
-	name = "GuiContainer",
-	version = "0.0.0"
-)
-/*
- * GUIを使う場合NetworkModアノテーションの付与が必要.
- * 基本的にclientSideRequired = true, serverSideRequired = falseでよい.
- */
-@NetworkMod(
-	clientSideRequired = true,
-	serverSideRequired = false
-)
-public class SampleGuiContainerCore {
+@Mod(modid = SampleGuiContainerCore.MODID, version = SampleGuiContainerCore.VERSION)
+public class SampleGuiContainerCore
+{
+	public static final String MODID = "GuiContainer";
+	public static final String VERSION = "0.0.0";
 
 	/*
 	 * このクラスの静的なインスタンスを生成する.
@@ -36,19 +24,18 @@ public class SampleGuiContainerCore {
 	public static Block blockGui;
 
 	@Mod.EventHandler
-	public void init(FMLInitializationEvent event) {
-
-		blockGui = (new BlockGui(4008, Material.rock))
-				.setUnlocalizedName("blockGui")
-				.setTextureName("cauldron_inner")
+	public void preInit(FMLPreInitializationEvent event)
+	{
+		blockGui = (new BlockGui(Material.rock))
+				.setBlockName("blockGui")
+				.setBlockTextureName("cauldron_inner")
 				.setCreativeTab(CreativeTabs.tabBlock);
 
 		GameRegistry.registerBlock(blockGui, "blockGui");
-		LanguageRegistry.addName(blockGui, "Block Gui");
 
 		/*
 		 * IGuiHandlerを実装したクラスを, このmodのクラスと関連付けて登録するメソッド.
 		 */
-		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 	}
 }

@@ -7,8 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityGuiSample extends TileEntity implements IInventory {
-
+public class TileEntityGuiSample extends TileEntity implements IInventory
+{
 	private ItemStack[] items = new ItemStack[9];
 
 	// NBTの実装
@@ -23,22 +23,23 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * フィールドをNBTから読み込むメソッド.
 	 */
 	@Override
-	public void readFromNBT(NBTTagCompound nbtTagCompound) {
+	public void readFromNBT(NBTTagCompound nbtTagCompound)
+	{
 		super.readFromNBT(nbtTagCompound);
 
 		/*
 		 * NBTTagCompoundから"Items"タグがついたNBTTagListを取り出す.
 		 */
-		NBTTagList itemsTagList = nbtTagCompound.getTagList("Items");
+		NBTTagList itemsTagList = nbtTagCompound.getTagList("Items", 10);
 
 		this.items = new ItemStack[this.getSizeInventory()];
 
 		/*
 		 * "Items"タグがついかNBTTagListから, "Slot"タグのものを順次取り出す.
 		 */
-		for (int tagCounter = 0; tagCounter < itemsTagList.tagCount(); ++tagCounter) {
-
-			NBTTagCompound itemTagCompound = (NBTTagCompound)itemsTagList.tagAt(tagCounter);
+		for (int tagCounter = 0; tagCounter < itemsTagList.tagCount(); ++tagCounter)
+		{
+			NBTTagCompound itemTagCompound = (NBTTagCompound)itemsTagList.getCompoundTagAt(tagCounter);
 
 			/*
 			 * byteなので容量の節約のため.
@@ -46,7 +47,8 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 			 */
 			byte slotIndex = itemTagCompound.getByte("Slot");
 
-			if (slotIndex >= 0 && slotIndex < this.items.length) {
+			if (slotIndex >= 0 && slotIndex < this.items.length)
+			{
 				/*
 				 * NBTTagCompoundからItemStackのインスタンスを得るメソッドを利用する.
 				 */
@@ -59,17 +61,18 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * フィールドの保存のためにNBTに変換するメソッド.
 	 */
 	@Override
-	public void writeToNBT(NBTTagCompound nbtTagCompound) {
+	public void writeToNBT(NBTTagCompound nbtTagCompound)
+	{
 		super.writeToNBT(nbtTagCompound);
 		NBTTagList itemsTagList = new NBTTagList();
 
-		for (int slotIndex = 0; slotIndex < this.items.length; ++slotIndex) {
-
+		for (int slotIndex = 0; slotIndex < this.items.length; ++slotIndex)
+		{
 			/*
 			 * ItemStackがあるスロットのデータだけ保存する.
 			 */
-			if (this.items[slotIndex] != null) {
-
+			if (this.items[slotIndex] != null)
+			{
 				NBTTagCompound itemTagCompound = new NBTTagCompound();
 
 				/*
@@ -103,7 +106,8 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * Inventoryの要素数を返すメソッド.
 	 */
 	@Override
-	public int getSizeInventory() {
+	public int getSizeInventory()
+	{
 		return 9;
 	}
 
@@ -112,9 +116,10 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * 引数はスロット番号
 	 */
 	@Override
-	public ItemStack getStackInSlot(int slotIndex) {
-
-		if (slotIndex >= 0 && slotIndex < this.items.length) {
+	public ItemStack getStackInSlot(int slotIndex)
+	{
+		if (slotIndex >= 0 && slotIndex < this.items.length)
+		{
 			return this.items[slotIndex];
 		}
 		return null;
@@ -127,20 +132,22 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * 戻り値は分割後のItemStack
 	 */
 	@Override
-	public ItemStack decrStackSize(int slotIndex, int splitStackSize) {
-
-		if (this.items[slotIndex] != null) {
+	public ItemStack decrStackSize(int slotIndex, int splitStackSize)
+	{
+		if (this.items[slotIndex] != null)
+		{
 			/*
 			 * 引数のスタック数より現在のスタック数が少ない場合は移動になる.
 			 */
-			if (this.items[slotIndex].stackSize <= splitStackSize) {
+			if (this.items[slotIndex].stackSize <= splitStackSize)
+			{
 				ItemStack tmpItemStack = items[slotIndex];
 				this.items[slotIndex] = null;
 
 				/*
 				 * スロットの変更を通知.
 				 */
-				this.onInventoryChanged();
+				this.markDirty();
 
 				return tmpItemStack;
 			}
@@ -153,11 +160,12 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 			/*
 			 * 分割後にスタック数が0になった場合は空にする.
 			 */
-			if (this.items[slotIndex].stackSize == 0) {
+			if (this.items[slotIndex].stackSize == 0)
+			{
 				this.items[slotIndex] = null;
 			}
 
-			this.onInventoryChanged();
+			this.markDirty();
 
 			return splittedItemStack;
 		}
@@ -169,7 +177,8 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * 引数のスロットのItemStackを返すメソッド.
 	 */
 	@Override
-	public ItemStack getStackInSlotOnClosing(int slotIndex) {
+	public ItemStack getStackInSlotOnClosing(int slotIndex)
+	{
 		return this.items[slotIndex];
 	}
 
@@ -178,25 +187,27 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * 引数は(スロット番号, そのスロットに入れるItemStack)
 	 */
 	@Override
-	public void setInventorySlotContents(int slotIndex, ItemStack itemStack) {
-
+	public void setInventorySlotContents(int slotIndex, ItemStack itemStack)
+	{
 		this.items[slotIndex] = itemStack;
 
-		if (itemStack != null && itemStack.stackSize > getInventoryStackLimit()) {
+		if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
+		{
 			/*
 			 * スロットのスタック数制限を超えている場合, 制限を課す.
 			 */
 			itemStack.stackSize = getInventoryStackLimit();
 		}
-		this.onInventoryChanged();
+		this.markDirty();
 	}
 
 	/*
-	 * Inventoryの名前
-	 * (ここではunlocalizedNameだが, 金床で名前をつける場合の処理はやや異なるので, かまどやチェストのコードを参考のこと)
-	 */
+ 	 * Inventoryの名前
+ 	 * (ここではunlocalizedNameだが, 金床で名前をつける場合の処理はやや異なるので, かまどやチェストのコードを参考のこと)
+ 	 */
 	@Override
-	public String getInvName() {
+	public String getInventoryName()
+	{
 		return "container.tileEntityGuiSample";
 	}
 
@@ -205,7 +216,8 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * 今回はつけないのでfalse
 	 */
 	@Override
-	public boolean isInvNameLocalized() {
+	public boolean hasCustomInventoryName()
+	{
 		return false;
 	}
 
@@ -213,7 +225,8 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * 1スロットあたりの最大スタック数
 	 */
 	@Override
-	public int getInventoryStackLimit() {
+	public int getInventoryStackLimit()
+	{
 		return 64;
 	}
 
@@ -221,12 +234,13 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * 主にContainerで利用する, GUIを開けるかどうかを判定するメソッド.
 	 */
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-
+	public boolean isUseableByPlayer(EntityPlayer entityplayer)
+	{
 		/*
 		 * この座標にあるTileEntityがこのクラスでないならfalse
 		 */
-		if (worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) != this) {
+		if (worldObj.getTileEntity(xCoord, yCoord, zCoord) != this)
+		{
 			return false;
 		}
 
@@ -237,7 +251,8 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public void openChest() {
+	public void openInventory()
+	{
 		/*
 		 *  今回は利用しない.
 		 *  利用する場合は, Containerのコンストラクタでこのメソッドを呼ぶ必要がある.
@@ -245,7 +260,8 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public void closeChest() {
+	public void closeInventory()
+	{
 		/*
 		 *  今回は利用しない.
 		 *  利用する場合は, ContainerのonContainerClosedメソッドでこのメソッドを呼ぶ必要がある.
@@ -256,7 +272,8 @@ public class TileEntityGuiSample extends TileEntity implements IInventory {
 	 * trueではHopperでアイテムを送れるようになる.
 	 */
 	@Override
-	public boolean isItemValidForSlot(int slotIndex, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int slotIndex, ItemStack itemstack)
+	{
 		return true;
 	}
 }

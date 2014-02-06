@@ -5,10 +5,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public class BlockGui extends Block {
-
-	public BlockGui(int blockID, Material material) {
-		super(blockID, material);
+public class BlockGui extends Block
+{
+	public BlockGui(Material material)
+	{
+		super(material);
 	}
 
 	/*
@@ -18,8 +19,8 @@ public class BlockGui extends Block {
 	 * dx, dy, dzはブロック上での位置(0.0~1.0)
 	 */
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float dx, float dy, float dz) {
-
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float dx, float dy, float dz)
+	{
 		/*
 		 * サーバー側のみopenGuiメソッドを使ってGuiを呼ぶ.
 		 * openGuiの引数でModで追加されるGUIを判定する.
@@ -39,6 +40,4 @@ public class BlockGui extends Block {
 		 */
 		return true;
 	}
-
-
 }
