@@ -29,6 +29,13 @@ public class TileEntityGuiSample extends TileEntity implements IInventory
 
 		/*
 		 * NBTTagCompoundから"Items"タグがついたNBTTagListを取り出す.
+		 * 1.7からNBTTypeが引数に必要になった.
+		 * 引数とNBTTypeの対応は以下の通り.
+		 * 0 => "END",    1 => "BYTE",   2 => "SHORT",     3 => "INT",
+		 * 4 => "LONG",   5 => "FLOAT",  6 => "DOUBLE",    7 => "BYTE[]",
+		 * 8 => "STRING", 9 => "LIST",  10 => "COMPOUND", 11 => "INT[]"
+		 *
+		 * 今回はNBTCompoundなので10を渡す.
 		 */
 		NBTTagList itemsTagList = nbtTagCompound.getTagList("Items", 10);
 
