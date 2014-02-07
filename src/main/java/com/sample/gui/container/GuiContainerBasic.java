@@ -1,5 +1,7 @@
 package com.sample.gui.container;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -9,7 +11,9 @@ import net.minecraft.util.StatCollector;
 
 /*
  * 今回はContainerを使うのでGuiContainerを継承する.
+ * クライアントのみなのでSideOnlyアノテーションを付与しておく.
  */
+@SideOnly(Side.CLIENT)
 public class GuiContainerBasic extends GuiContainer
 {
 	/*
