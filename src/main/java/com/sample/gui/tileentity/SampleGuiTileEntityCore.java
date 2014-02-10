@@ -1,6 +1,7 @@
 package com.sample.gui.tileentity;
 
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -28,7 +29,11 @@ public class SampleGuiTileEntityCore
 				.setCreativeTab(CreativeTabs.tabBlock);
 
 		GameRegistry.registerBlock(blockGuiTileEntity, "blockGuiTileEntity");
+	}
 
+	@Mod.EventHandler
+	public void init(FMLInitializationEvent event)
+	{
 		/*
 		 * TileEntityを登録するメソッド.
 		 * 引数はTileEntityのクラスと, キー(文字列)

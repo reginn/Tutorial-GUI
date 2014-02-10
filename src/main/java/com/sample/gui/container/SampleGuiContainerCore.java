@@ -1,6 +1,7 @@
 package com.sample.gui.container;
 
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -32,7 +33,11 @@ public class SampleGuiContainerCore
 				.setCreativeTab(CreativeTabs.tabBlock);
 
 		GameRegistry.registerBlock(blockGui, "blockGui");
+	}
 
+	@Mod.EventHandler
+	public void init(FMLInitializationEvent event)
+	{
 		/*
 		 * IGuiHandlerを実装したクラスを, このmodのクラスと関連付けて登録するメソッド.
 		 */
