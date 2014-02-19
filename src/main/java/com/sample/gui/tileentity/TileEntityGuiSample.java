@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.Constants;
 
 public class TileEntityGuiSample extends TileEntity implements IInventory
 {
@@ -36,8 +37,9 @@ public class TileEntityGuiSample extends TileEntity implements IInventory
 		 * 8 => "STRING", 9 => "LIST",  10 => "COMPOUND", 11 => "INT[]"
 		 *
 		 * 今回はNBTCompoundなので10を渡す.
+		 * net.minecraftforge.common.util.Constantsに各NBTごとの定数が用意されているので利用する.
 		 */
-		NBTTagList itemsTagList = nbtTagCompound.getTagList("Items", 10);
+		NBTTagList itemsTagList = nbtTagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
 
 		this.items = new ItemStack[this.getSizeInventory()];
 
